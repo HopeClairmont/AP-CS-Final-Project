@@ -1,5 +1,7 @@
-import com.sun.j3d.utils.universe.SimpleUniverse;
-import com.sun.j3d.utils.geometry.ColorCube;
+import com.sun.j3d.utils.universe.*;
+import com.sun.j3d.utils.geometry.*;
+import javax.media.j3d.*;
+import javax.vecmath.*;
 
 public class Asteroid(){
   public Asteroid(){
