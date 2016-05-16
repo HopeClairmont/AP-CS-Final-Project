@@ -1,18 +1,17 @@
-import java.awt.*;
-public class GameRunner {
+import javax.swing.JFrame;
 
+public class GameRunner {
+	public static int w = 1000;
+	public static int h = 1000;
+	public static Universe uni = new Universe();
 	public static void main(String[] args) {
-		
-		//creates universe
-		Universe uni = new Universe();
-		DrawingPanel panel = new DrawingPanel(uni.getSize(),uni.getSize());
-		Graphics g = panel.getGraphics();
-		uni.create(panel,g);
-		
-		//creates hero_ship
-		Ship heroShip = new Ship();
-		g.setColor(heroShip.getColor());
-		heroShip.create(panel, g);
+		uni.setSize(1000,1000);
+		uni.setResizable(true);
+		uni.setVisible(true);
+		uni.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		uni.setTitle("Space Game");
+		uni.setLocationRelativeTo(null);
+		uni.setAlwaysOnTop(true);
 	}
 
 }

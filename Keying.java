@@ -1,24 +1,20 @@
-package WorkingJFrame;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Keying extends JPanel {
+public class Keying extends JPanel{
+	public Ship heroShip;
 	
-	public Rectangle character;
-	
-	public int charW = 24;
-	public int charH = 36;
+	public int radius = 30;
 	
 	public boolean right = false;
 	public boolean left = false;
 	
-	public Keying(Display f, Images i){
-		character = new Rectangle(500,800,charW,charH);
+	public Keying(Universe uni, Images i){
+		heroShip = new Ship(radius,500,800);
 		
-		f.addKeyListener(new KeyAdapter(){
+		uni.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent e){
 				if(e.getKeyCode() == KeyEvent.VK_D){
 					right = true;
@@ -37,20 +33,20 @@ public class Keying extends JPanel {
 				}
 			}
 		});
-		
 	}
 	
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		this.setBackground(Color.BLACK);
-		g.setColor(Color.WHITE);
-		g.fillRect(character.x, character.y, character.width, character.height);
+		g.setColor(Color.GREEN);
+		g.fillOval(heroShip.getX(),heroShip.getY(),
+				heroShip.getRadius()*2,heroShip.getRadius());
 		
 		if(right){
-			character.x += 1;
+			heroShip.setX(heroShip.getX()+1);
 		}
 		if(left){
-			character.x -= 1;
+			heroShip.setX(heroShip.getX()-1);
 		}
 		repaint();
 	}

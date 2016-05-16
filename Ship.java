@@ -1,33 +1,34 @@
 import java.awt.*;
-import javax.swing.*;
 
-public class Ship extends JPanel{
-
+public class Ship {
 	private int radius;
-	private Point position;
-	private Color c;
+	private int x;
+	private int y;
 	
-	//creates generic ship
-	public Ship(){
-		radius = 30;
-		position = new Point(485,500);
-		c = Color.GREEN;
-	}
-	public Ship(int r, Point p, Color c){
+	public Ship(int r, int x, int y){
 		radius = r;
-		position = p;
-		this.c = c;
+		this.setX(x);
+		this.setY(y);
 	}
 	public int getRadius(){
 		return radius;
 	}
-	public Point getPosition(){
-		return position;
+	public void setRadius(int r){
+		radius = r;
 	}
-	public Color getColor(){
-		return c;
+	public int getX() {
+		return x;
 	}
-	public void create(DrawingPanel panel, Graphics g){
-		g.fillOval((int)position.getX(), (int)position.getY(), radius*2, radius);
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public void GameOver(boolean isTouching){
+		
 	}
 }
