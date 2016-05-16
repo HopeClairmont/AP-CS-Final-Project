@@ -1,4 +1,74 @@
-public class Asteroid(){
-  public Asteroid(){
-  
+import java.awt.*;
+import java.util.*;
+import java.util.Timer;
+
+import javax.swing.*;
+
+
+public class Asteroid extends JFrame{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public JPanel jp = (JPanel) getGlassPane();
+	private Rectangle aster;
+	private final int RADIUS = 10;
+	private final int OFFSET = (int) (RADIUS*1.5);
+	private Point pos;
+	
+	private Timer t = new Timer();
+	private boolean isTouching = false;
+	
+	public Asteroid(int panelWidth){
+		Random rand = new Random(); //this variable 
+		this.setPosition(rand.nextInt(panelWidth-2*OFFSET) + OFFSET, OFFSET);
+		aster = new Rectangle((int) (pos.getX()),(int) (pos.getY()),RADIUS, RADIUS);
+		
+		Graphics g = jp.getGraphics();
+		jp.setVisible(true);
+		updatePosition(g);
+	}
+	
+
+	public void setPosition(int x, int y){
+		pos = new Point(x,y);
+	}
+	
+	
+	public void setIsTouching(boolean newIT){
+		isTouching = newIT;
+	}
+	
+	public Point getPosition(){
+		return pos;
+	}
+
+	public int getRadius(){ //RADIUS does not have a setter!
+		return RADIUS;
+	}
+	
+	public boolean getIsTouching(){
+		return isTouching;
+	}
+	
+	public void updatePosition(Graphics g){
+			this.setBackground(Color.BLACK);
+			g.setColor(Color.GRAY);
+			g.fillRect(aster.x, aster.y, aster.width, aster.height);
+			t.schedule(new TimerTask() {
+				  @Override
+				  public void run() {
+					  if(!isTouching && pos.getY()< jp.getHeight()){
+						  aster.y+=OFFSET;
+						  repaint();
+					  }
+					  else{
+						  break;
+					  }
+				  }
+			}, 500,500);
+			
+	}
+	
 }
