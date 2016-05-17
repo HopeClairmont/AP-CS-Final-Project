@@ -1,33 +1,37 @@
 import java.awt.*;
 import java.util.*;
 import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 
 
-public class Asteroid extends JFrame{
+public class Asteroid extends JPanel{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public JPanel jp = (JPanel) getGlassPane();
 	private Rectangle aster;
-	private final int RADIUS = 10;
+	private int RADIUS = 10;
 	private final int OFFSET = (int) (RADIUS*1.5);
+	private int height;
 	private Point pos;
 	
 	private Timer t = new Timer();
 	private boolean isTouching = false;
 	
-	public Asteroid(int panelWidth){
+	public Asteroid(Universe uni){
 		Random rand = new Random(); //this variable 
-		this.setPosition(rand.nextInt(panelWidth-2*OFFSET) + OFFSET, OFFSET);
+		System.out.println(uni.getWidth());
+		int x = rand.nextInt(uni.getWidth());
+		this.setPosition(-5,OFFSET);
+		System.out.println(pos);
 		aster = new Rectangle((int) (pos.getX()),(int) (pos.getY()),RADIUS, RADIUS);
 		
-		Graphics g = jp.getGraphics();
-		jp.setVisible(true);
-		updatePosition(g);
+		Graphics g = uni.getGraphics();
+		height = uni.getHeight();
+		uni.setVisible(true);
 	}
 	
 
@@ -52,22 +56,23 @@ public class Asteroid extends JFrame{
 		return isTouching;
 	}
 	
-	public void updatePosition(Graphics g){
-			this.setBackground(Color.BLACK);
-			g.setColor(Color.GRAY);
-			g.fillRect(aster.x, aster.y, aster.width, aster.height);
-			t.schedule(new TimerTask() {
-				  @Override
-				  public void run() {
-					  if(!isTouching && pos.getY()< jp.getHeight()){
-						  aster.y+=OFFSET;
-						  repaint();
-					  }
-					  else{
-						  break;
-					  }
-				  }
-			}, 500,500);
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		this.setBackground(Color.BLACK);
+		g.setColor(Color.GRAY);
+		g.fillRect(aster.x, aster.y, aster.width, aster.height);
+		this.setBackground(Color.BLACK);
+		if(!isTouching && pos.getY()< height){
+			aster.y+=OFFSET;
+		}
+		
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		repaint();
 			
 	}
 	
