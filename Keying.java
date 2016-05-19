@@ -5,34 +5,52 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class Keying extends JPanel{
-	public Ship heroShip;
-	public Ship alienShip;
-	public Asteroid aster1;
-	public Asteroid aster2;
-	public Asteroid aster3;
-	public Asteroid aster4;
-	public Asteroid aster5;
+	private Ship heroShip;
+	private Ship alienShip;
+	private Asteroid aster1;
+	private Asteroid aster2;
+	private Asteroid aster3;
+	private Asteroid aster4;
+	private Asteroid aster5;
+	//need these to use .getBounds and check if the asteroids collide with the ship because Rectangle class is useful for this
+	private Rectangle BoundAster1;
+	private Rectangle BoundAster2;
+	private Rectangle BoundAster3;
+	private Rectangle BoundAster4;
+	private Rectangle BoundAster5;
 	
-	public int radius = 30;
+	private Rectangle BoundHeroShip;
+	private Rectangle BoundAlienShip;
 	
-	public boolean hero_right = false;
-	public boolean hero_left = false;
-	public boolean hero_up = false;
-	public boolean hero_down = false;
+	private boolean CollisionDetected;
 	
-	public boolean alien_right = false;
-	public boolean alien_left = false;
-	public boolean alien_up = false;
-	public boolean alien_down = false;
+	private int radius = 30;
+	
+	private boolean hero_right = false;
+	private boolean hero_left = false;
+	private boolean hero_up = false;
+	private boolean hero_down = false;
+	
+	private boolean alien_right = false;
+	private boolean alien_left = false;
+	private boolean alien_up = false;
+	private boolean alien_down = false;
 	
 	public Keying(Universe uni, Images i){
 		heroShip = new Ship(radius,500,800);
 		alienShip = new Ship(radius,500,200);
-		aster1 = new Asteroid(radius*3);
-		aster2 = new Asteroid(radius*2);
+		aster1 = new Asteroid(radius);
+		aster2 = new Asteroid(radius);
 		aster3 = new Asteroid(radius);
 		aster4 = new Asteroid(radius);
 		aster5 = new Asteroid(radius);
+		
+		BoundAster1 = new Rectangle(aster1.getvarX(),aster1.getvarY(),radius,radius);
+		BoundAster2 = new Rectangle(aster2.getvarX(),aster2.getvarY(),radius,radius);
+		BoundAster3 = new Rectangle(aster3.getvarX(),aster3.getvarY(),radius,radius);
+		BoundAster4 = new Rectangle(aster4.getvarX(),aster4.getvarY(),radius,radius);
+		BoundAster5 = new Rectangle(aster5.getvarX(),aster5.getvarY(),radius,radius);
+		
 		uni.addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent e){
 				//hero movements
@@ -94,7 +112,7 @@ public class Keying extends JPanel{
 			}
 		});
 	}
-	public void paintComponent(Graphics g){
+	public void paintComponent(Graphics g){	
 		super.paintComponent(g);
 		//universe
 		this.setBackground(Color.BLACK);
@@ -106,28 +124,58 @@ public class Keying extends JPanel{
 		g.setColor(Color.RED);
 		g.fillOval(alienShip.getX(), alienShip.getY(), 
 				alienShip.getRadius()*2, alienShip.getRadius());
-		//asteroids
+		
+		//asteroid #1
 		g.setColor(Color.GRAY);
 		g.fillOval(aster1.getvarX(), aster1.getvarY(), radius, radius);
+		//bound #1
+		g.setColor(Color.RED);
+		g.drawRect(BoundAster1.x,BoundAster1.y,BoundAster1.width,BoundAster1.height);
 		if(aster1.getvarY()< getHeight()){
 			 aster1.setvarY(aster1.getvarY()+3);
+			 BoundAster1.y+=3;
 		}
+		//asteroid #2
+		g.setColor(Color.GRAY);
 		g.fillOval(aster2.getvarX(), aster2.getvarY(), radius, radius);
+		//bound #2
+		g.setColor(Color.RED);
+		g.drawRect(BoundAster2.x,BoundAster2.y,BoundAster2.width,BoundAster2.height);	
 		if(aster2.getvarY()< getHeight()){
 			 aster2.setvarY(aster2.getvarY()+3);
+			 BoundAster2.y+=3;
 		}
+		//asteroid #3
+		g.setColor(Color.GRAY);
 		g.fillOval(aster3.getvarX(), aster3.getvarY(), radius, radius);
+		//bound #3
+		g.setColor(Color.RED);
+		g.drawRect(BoundAster3.x,BoundAster3.y,BoundAster3.width,BoundAster3.height);
 		if(aster3.getvarY()< getHeight()){
 			 aster3.setvarY(aster3.getvarY()+5);
+			 BoundAster3.y+=5;
 		}
+		//asteroid #4
+		g.setColor(Color.GRAY);
 		g.fillOval(aster4.getvarX(), aster4.getvarY(), radius, radius);
+		//bound #4
+		g.setColor(Color.RED);
+		g.drawRect(BoundAster4.x,BoundAster4.y,BoundAster4.width,BoundAster4.height);	
 		if(aster4.getvarY()< getHeight()){
 			 aster4.setvarY(aster4.getvarY()+5);
+			 BoundAster4.y+=5;
 		}
+		//asteroid #5
+		g.setColor(Color.GRAY);
 		g.fillOval(aster5.getvarX(), aster5.getvarY(), radius, radius);
+		//bound #5
+		g.setColor(Color.RED);
+		g.drawRect(BoundAster5.x,BoundAster5.y,BoundAster5.width,BoundAster5.height);	
 		if(aster5.getvarY()< getHeight()){
 			 aster5.setvarY(aster5.getvarY()+6);
+			 BoundAster5.y+=6;
 		}
+			
 		if(hero_right){
 			heroShip.setX(heroShip.getX()+1);
 		}
@@ -159,5 +207,5 @@ public class Keying extends JPanel{
 			e.printStackTrace();
 		}
 		repaint();
-	}
+		}
 }
