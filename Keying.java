@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.*;
+import java.util.Timer;
 
 public class Keying extends JPanel{
 	private Ship heroShip;
@@ -27,7 +28,6 @@ public class Keying extends JPanel{
 	private Rectangle BoundAlienShip;
 	
 	private boolean ingame = true;
-	private boolean CollisionDetected;
 	
 	private int radius = 30;
 	private int width = 1000;
@@ -42,6 +42,8 @@ public class Keying extends JPanel{
 	private boolean alien_left = false;
 	private boolean alien_up = false;
 	private boolean alien_down = false;
+	
+	private Timer timer;
 	
 	public Keying(Universe uni, Images i, JPanel gp){
 		heroShip = new Ship(radius,500,800);
@@ -128,6 +130,7 @@ public class Keying extends JPanel{
 		});
 	}
 	public void paintComponent(Graphics g){	
+		
 		CheckCollisions();
 		if(ingame){
 		super.paintComponent(g);
@@ -232,7 +235,7 @@ public class Keying extends JPanel{
 			BoundAlienShip.y+=1;
 		}
 		try {
-			Thread.sleep(20);
+			Thread.sleep(2);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -244,20 +247,27 @@ public class Keying extends JPanel{
 	}
 	
 	public void drawGameOver(Graphics g){
-		 String msg = "Game Over";
-	        Font small = new Font("Helvetica", Font.BOLD, 14);
+		 String msg = "Game Over!!";
+	        Font small = new Font("Helvetica", Font.BOLD, 64);
 	        FontMetrics fm = getFontMetrics(small);
 
 	        g.setColor(Color.white);
 	        g.setFont(small);
 	        g.drawString(msg, (width - fm.stringWidth(msg)) / 2,
 	                height / 2);
+	        JOptionPane.showMessageDialog(null,"Your score is " + (System.currentTimeMillis())/1000);
 	}
 	public void CheckCollisions(){
-		for(Rectangle element: BoundAsters){
+		if(BoundAlienShip.intersects(BoundHeroShip)){
+			this.removeAll();
+			ingame = false;
+		}
+		else{	
+			for(Rectangle element: BoundAsters){
 			if(element.intersects(BoundHeroShip)){
 				this.removeAll();
 				ingame = false;
+				}
 			}
 		}
 	}
