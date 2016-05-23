@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 
 import java.awt.*;
@@ -24,7 +23,9 @@ public class Keying extends JPanel{
 	private int radius = 30;
 	private int width = 1000;
 	private int height = 1000;
-	private final int ASTER_COUNT = 10;
+	
+	private Random rand = new Random();
+	private int ASTER_COUNT = rand.nextInt(11);
 	
 	private boolean hero_right = false;
 	private boolean hero_left = false;
