@@ -1,5 +1,3 @@
-package SpaceGame;
-
 import java.awt.*;
 import java.util.*;
 import java.util.Timer;
@@ -16,14 +14,19 @@ public class Asteroid extends JPanel{
 	private int x;
 	private int y;
 	
+	private int speedX;
+	private int speedY;
+	
 	private Timer t = new Timer();
 	private boolean isTouching = false;
 	
-	public Asteroid(int r){
+	public Asteroid(int r, int vX, int vY){
 		Random rand = new Random(); //this variable 
 		x = rand.nextInt(900) + offset;
 		y = offset;
 		radius = r;
+		speedX = vX;
+		speedY = vY;
 	}
 	public int getvarX(){
 		return x;
@@ -47,6 +50,14 @@ public class Asteroid extends JPanel{
 	
 	public boolean getIsTouching(){
 		return isTouching;
+	}
+	
+	public int getSpeedX(){
+		return speedX;
+	}
+	
+	public int getSpeedY(){
+		return speedY;
 	}
 	
 	public void updatePosition(Graphics g){
